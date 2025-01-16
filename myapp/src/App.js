@@ -1,16 +1,22 @@
+import { useState } from "react";
 import "./App.css";
 
 function MyButton() {
+  const [count , Setcount]=useState(1);
+  function handleClick(){
+ 
+    Setcount(count+1);
+    alert("Clicked "+count+" times");
+  }
+  
   return (
-    <button onClick={handleClick()}>
+    <button onClick={handleClick}>
       I'm a button
     </button>
+    
   );
 }
 
-function handleClick(){
-  alert("Clicked");
-}
 
 function Hello()
 {

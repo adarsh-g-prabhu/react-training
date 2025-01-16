@@ -1,17 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-// import MyApp from './App.js';
-import LoginPage from './Login.js';
-
+import MyApp from './App.js';
+// import LoginPage from './Login.js';
+import UseStates  from './useState.js';
+import Tictactoe from "./tictactoe.js"
+import List from "./list.js"
+import Props from "./props.js"
 import reportWebVitals from './reportWebVitals';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  
-    // <MyApp />
-    <LoginPage />
+    <>
+    <MyApp />
+    {/* <LoginPage /> */}
+    <UseStates />
+    <Tictactoe />
+    <List />
+    <Props />
+    </>
 
   
 );
