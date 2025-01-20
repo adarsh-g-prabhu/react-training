@@ -8,7 +8,8 @@ import Tictactoe from "./tictactoe.js"
 import List from "./list.js"
 import Props from "./props.js"
 import reportWebVitals from './reportWebVitals';
-
+ import Forms from "./forms.js";
+ import Lazy from "./depth.js";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -19,6 +20,8 @@ root.render(
     <Tictactoe />
     <List />
     <Props />
+    <Forms />
+    <Lazy />
     </>
 
   
