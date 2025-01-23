@@ -10,7 +10,7 @@ export default function Color()
     let count=0;
     function changeColor()
     {
-        count<colorArray.length ? count+=1:count=0;
+        count<=colorArray.length ? count+=1:count=0;
         setColor(colorArray[count]);
         console.log('array:'+colorArray[count]);
         console.log(color);
@@ -18,6 +18,7 @@ export default function Color()
     }
 
     return(
+
         <button onClick={changeColor}>Change background</button>
     )
 }

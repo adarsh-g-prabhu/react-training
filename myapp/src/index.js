@@ -10,6 +10,10 @@ import Props from "./props.js"
 import reportWebVitals from './reportWebVitals';
  import Forms from "./forms.js";
  import Lazy from "./depth.js";
+import Reference from './ref.js';
+import MainPortal from './createPortal.js';
+import StateReducer from './reducer.js';
+ 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -22,6 +26,9 @@ root.render(
     <Props />
     <Forms />
     <Lazy />
+    <Reference/>
+    <MainPortal/>
+    <StateReducer/>
     </>
 
   

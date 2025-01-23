@@ -5,14 +5,23 @@ import { useState } from "react";
 
 function Form()
 {
-    const [name,setName]=useState('user');
+    const [name,setName]=useState();
+    const [userName,setUsername]=useState('user');
+    const getInput= (event)=> setName(event.target.value);
+
+    function setname(event){
+    event.preventDefault();
+    console.log(name);
+    setUsername(name);
+    }
     return(
         <div>
-            <form>
-                <input type="text" placeholder="enter your name" name="name" onChange={(event)=> setName(event.target.value)}/>
+            <form onSubmit={setname}>
+
+                <input type="text" placeholder="enter your name" name="name" onChange={getInput}/>
                 <input type="submit" />
             </form>
-            <p>Hello, {name}</p>
+            <p>Hello, {userName}</p>
         </div>
     );
 }
