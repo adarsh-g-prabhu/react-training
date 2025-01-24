@@ -5,17 +5,23 @@ import { useState } from "react";
 
 export default function Color()
 {
-    const [color,setColor]=useState();
-    const colorArray=['blue','red','yellow','orange','green','white'];
-    let count=0;
+    const [color,setColor]=useState('white');
+    const [count,setCount]=useState(0);
+    const colorArray=['blue','red','yellow','orange','green','pink'];
+    // let count=0;
     function changeColor()
     {
-        count<=colorArray.length ? count+=1:count=0;
+        
+        count<=colorArray.length-1 ? setCount(count+1):setCount(0);
+        
         setColor(colorArray[count]);
+        document.body.style.backgroundColor=color;
+        console.log("count",count);
         console.log('array:'+colorArray[count]);
         console.log(color);
-        document.body.style.backgroundColor=color;
+       
     }
+    
 
     return(
 

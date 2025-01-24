@@ -8,17 +8,16 @@ import { useState } from "react";
 export default function Counter()
 {
     const [count,setCount]=useState(0);
-    let prev=1;
+    // let prev=1;
     function CounterIncrease()
     {
-        
-        setCount(count=>count+prev);
-        prev=count;
-        console.log(count + prev)
+       
+        setCount(count=>count+1);
+        // console.log(count + prev)
     }
     function CounterDecrease()
     {   
-        count==0?setCount(0):setCount(count-1)
+        count===0?setCount(0):setCount(count-1)
     }
     return(
         <div>
