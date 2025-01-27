@@ -15,12 +15,14 @@ export default function Color()
         count<=colorArray.length-1 ? setCount(count+1):setCount(0);
         
         setColor(colorArray[count]);
+
         document.body.style.backgroundColor=color;
         console.log("count",count);
         console.log('array:'+colorArray[count]);
         console.log(color);
        
     }
+    
     
 
     return(

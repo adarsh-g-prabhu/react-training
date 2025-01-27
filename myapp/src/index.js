@@ -13,6 +13,11 @@ import reportWebVitals from './reportWebVitals';
 import Reference from './ref.js';
 import MainPortal from './createPortal.js';
 import StateReducer from './reducer.js';
+import { Provider } from 'react-redux';
+import store from './store.js';
+import Counter from './redux.js';
+import Calculator from './calculator.js';
+import Hooks from './hooks.js';
  
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -20,7 +25,7 @@ root.render(
     <>
     <MyApp />
     {/* <LoginPage /> */}
-    <UseStates />
+    {/* <UseStates />
     <Tictactoe />
     <List />
     <Props />
@@ -28,7 +33,13 @@ root.render(
     <Lazy />
     <Reference/>
     <MainPortal/>
-    <StateReducer/>
+    <StateReducer/> */}
+    {/* <Hooks/> */}
+    <Provider store={store}>
+    <Counter/>
+    </Provider>
+
+    <Calculator/>
     </>
 
   

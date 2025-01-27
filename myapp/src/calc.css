@@ -1,0 +1,19 @@
+.main-calculator-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    border: 1px solid grey;
+}
+.main-calculator-container div{
+    justify-content: space-around;
+}
+
+.main-calculator-container div button{
+    margin: 5px 5px 5px 5px;
+    width: 35px;
+    height: 35px;
+    color: black;
+    background-color: grey;
+}
