@@ -1,7 +1,7 @@
 // 5. Create a button that changes the background color of the page each time it is clicked, 
 // cycling through a few colors.
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Color()
 {
@@ -15,12 +15,16 @@ export default function Color()
        
         const count1=count<=colorArray.length-1 ? count+1:0;
         
-        setColor(colorArray[count1]);
+        
         setCount(count1);
+        setColor(colorArray[count1]);
         console.log("count",count1);
         console.log('array:'+colorArray[count1]);
+        const color1= colorArray[count1]
+        console.log(color1);
         console.log(color);
-        document.body.style.backgroundColor=color;
+        
+        document.body.style.backgroundColor=color1;
  
         
     }

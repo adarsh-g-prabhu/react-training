@@ -9,8 +9,8 @@ import Axios from './axios.js';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
-    {/* <Registration/> */}
+    {/* <App /> */}
+    <Registration/>
     {/* <Axios/> */}
 
   </React.StrictMode>

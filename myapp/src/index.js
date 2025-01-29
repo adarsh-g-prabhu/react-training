@@ -17,7 +17,8 @@ import { Provider } from 'react-redux';
 import store from './store.js';
 import Counter from './redux.js';
 import Calculator from './calculator.js';
-import Hooks from './hooks.js';
+// import Hooks from './hooks.js';
+import Axios from './Axioss.js';
  
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -35,11 +36,12 @@ root.render(
     <MainPortal/>
     <StateReducer/> */}
     {/* <Hooks/> */}
-    <Provider store={store}>
+    {/* <Provider store={store}>
     <Counter/>
     </Provider>
 
-    <Calculator/>
+    <Calculator/> */}
+    <Axios />
     </>
 
   
