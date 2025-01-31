@@ -1,3 +1,4 @@
+ import React from "react";
 const products = [
     { title: 'Cabbage', isFruit: false},
     { title: 'Garlic', isFruit: false},
@@ -6,8 +7,8 @@ const products = [
   ];
   
   export default function ShoppingList() {
-    const listItems = products.map(product =>
-      <li
+    const listItems = products.map((product,i) =>
+      <li key={i}
         style={{
           color: product.isFruit ? 'yellow' : 'green'
         }}

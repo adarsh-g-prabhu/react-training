@@ -1,88 +1,98 @@
-import { useReducer} from 'react'
+// formik, yup
+import { useState} from 'react'
 import './App.css'
 
 export default function Registration() {
-    // const [email,setEmail]=useState('');
-    // const [isEmail,setIsEmail]=useState(false)
-    // const [password,setPassword]=useState('');
-    // const [isPass,setIsPass]=useState(false);
-    
-    const initial = {email:'',password:'',phone:''};
+ 
 
-    const [state, dispatch] = useReducer(reducer, initial);
-    function reducer(state, action) {
-        switch (action.type) {
-            case 'email':
-               
-                return {...state,email:action.data};
-            case 'phone':
+    const initial = {email:'',password:'',phone:'',address:''};
+    const [data,setData]=useState(initial);
+    const [empty,setEmpty]=useState({email:false,password:false,phone:false,address:false})
 
-                return {...state,phone:action.data};
-            case 'pass':
-           
-                return {...state,password:action.data};
-            default:
-                return state;
+    function handleForm(e,type){
+        // console.log('out')
+        if(type==='email'){
+            // console.log(e.target.value)
+            setData((data)=>({...data,email:e.target.value}))
+            // console.log(data.email)
+
         }
+        else if(type==='password')
+        {
+            setData(data=>({...data,password:e.target.value}))
+        }
+        else if(type==='phone')
+        {
+            setData(data=>({...data,phone:e.target.value}))
+        }
+        else{
+            setData(data=>({...data,address:e.target.value}))
+        }
+        
+    }
+   
+    const patternEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        const isEmail=patternEmail.test(data.email)
+    
+        const phonePattern=/^\d{10}$/
+        const isPhone=phonePattern.test(data.phone)
+
+        const passPattern = /^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d$!@%&]{8,}$/;
+        const isPass=passPattern.test(data.password)
+
+    function handleSubmit(e)
+    {
+        e.preventDefault();
+        const err = [{
+            email: true,
+        }]
+        // console.log('email', data.email)
+        // data.email===''? setEmpty({...empty,email:true}):setEmpty({...empty,email:false});
+        // data.password===''? setEmpty({...empty,password:true}):setEmpty({...empty,password:false});
+        // data.phone===''? setEmpty({...empty,phone:true}):setEmpty({...empty,phone:false});
+        data.address===''? setEmpty({...empty,address:true}):setEmpty({...empty,address:false});
+
+        
     }
 
-
     
-    // const handlEmail=(e)=>{
-    //     setEmail(e.target.value);
-    //     // console.log(email);
-    //     const patternEmail=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    //     patternEmail.test(email)?setIsEmail(true):setIsEmail(false);
-        
-    // }
-
-
-
-    // const phonePattern=/^\d{10}$/;
-    // const handlePass=(e)=>{
-    //     setPassword(e.target.value);
-    //     const passPattern=/^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d$!@%&]{8,}$/;
-    //     passPattern.test(password)?setIsPass(true):setIsEmail(false)
-    // }
-    const patternEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    const isEmail=patternEmail.test(state.email)
-
-    const phonePattern=/^\d{10}$/
-    const isPhone=phonePattern.test(state.phone)
-    const passPattern = /^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d$!@%&]{8,}$/;
-    const isPass=passPattern.test(state.password)
+   
   return (
     <div className='main-div'>
         <h1>Registration</h1>
+        <form onSubmit={handleSubmit} noValidate>
+            <div className='form-div'>
         <div >
             <label htmlFor='email'>Email </label>
-            <input type='email' name='email' value={state.email} onChange={(e)=>dispatch({type:'email',data:e.target.value})
-
-            }/>
-            <span>{isEmail || state.email===''?'':'email is not valid'}</span>
-            {/* {console.log(isEmail, state.email)} */}
+            <input type='email' name='email' value={data.email} onChange={(e)=>handleForm(e,'email')}/>
+            <span>{isEmail || data.email===''?'':'email is not valid'}</span>
+            <span>{empty.email && 'Email should not be blank'}</span>
+                {console.log(empty.email, empty.address, empty.password, empty.phone)}
         </div>
         {/* {console.log(isEmail ,',', email )} */}
 
         <div>
             <label htmlFor='phone'>Phone Number </label>
-            <input type='tel' name='phone' maxLength={10} value={state.phone} onChange={(e)=>dispatch({type:'phone',data:e.target.value})}/>
-            {console.log(state.phone,isPhone)}
-            <span>{isPhone || state.phone===''?'':'phone  number is not valid'}</span>
+            <input type='tel' name='phone' maxLength={10} value={data.phone} onChange={(e)=>handleForm(e,'phone')}/>
+            {/* {console.log(data.phone,isPhone)} */}
+            <span>{isPhone || data.phone===''?'':'phone  number is not valid'}</span>
+            <span>{empty.phone && 'phone should not be blank'}</span>
         </div>
         <div>
             <label htmlFor='password'>password </label>
-            <input type='password' name='password' value={state.password} onChange={(e)=>dispatch({type:'pass',data:e.target.value})}/>
-            <span>{isPass || state.password===''?'':'password is not valid.)'}</span>
+            <input type='password' name='password' value={data.password} onChange={(e)=>handleForm(e,'password')}/>
+            <span>{isPass || data.password===''?'':'password is not valid.)'}</span>
+            <span>{empty.password && 'password should not be blank'}</span>
         </div>
         <div>
             <label htmlFor='address'>address </label>
             <textarea name='address'></textarea>
+            <span>{!empty.address && 'Address should not be blank'}</span>
         </div>
-        <input type='submit' />
-
+        <input type='submit' /></div>
+    </form>
 
     </div>
   )
-}
+    }
 

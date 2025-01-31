@@ -19,6 +19,7 @@ import Counter from './redux.js';
 import Calculator from './calculator.js';
 // import Hooks from './hooks.js';
 import Axios from './Axioss.js';
+import ErrorBoundary from './errorBoundary.js';
  
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -30,9 +31,11 @@ root.render(
     <Tictactoe />
     <List />
     <Props />
-    <Forms />
-    <Lazy />
-    <Reference/>
+    <Forms />*/
+        <ErrorBoundary fallback={<p>something went wrong</p>}><Lazy /></ErrorBoundary>
+    
+
+   /* <Reference/>
     <MainPortal/>
     <StateReducer/> */}
     {/* <Hooks/> */}

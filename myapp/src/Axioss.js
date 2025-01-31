@@ -1,24 +1,30 @@
 import axios from 'axios'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import React from 'react';
 
 export default function Axios() {
     const [datas,setDatas]=useState([])
    
-    axios.get('https://mocki.io/v1/65b1133e-5704-4053-874b-f9e2bca8e607')
+    useEffect(
+   ()=>{ axios.get('https://mocki.io/v1/65b1133e-5704-4053-874b-f9e2bca8e607')
     .then((response)=>{
-        // console.log(response)
+        console.log(response)
         const resData=response.data.map(res=>res.title)
-        setDatas(resData);
+        // setDatas(resData);
+        const sortedData=resData.sort()
+        setDatas(sortedData)
         
     })
     .catch(error=>console.log(error))
 
-    const newInstance= axios.create({
-      url:'https://mocki.io/v1/65b1133e-5704-4053-874b-f9e2bca8e607',
-      timeout:3000
-    })
-    newInstance.interceptors.response.use((response)=> {console.log(response)
-  return response.data})
+    
+    },[])
+// const newInstance= axios.create({
+//   url:'https://mocki.io/v1/65b1133e-5704-4053-874b-f9e2bca8e607',
+//   timeout:3000
+   
+//     newInstance.interceptors.response.use((response)=> {console.log(response)
+//   return response.data})
 
     
   return (
