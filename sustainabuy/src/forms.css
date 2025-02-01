@@ -1,0 +1,72 @@
+/* 
+
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: fit-content;
+    flex-flow: column wrap;
+    justify-self: center;
+    border: 2px dashed black;
+    color: whitesmoke;
+}
+body{
+  background: url(https://img.freepik.com/free-vector/gradient-blue-background_23-2149333531.jpg);
+  background-size: cover;
+
+
+}
+
+.gender{
+  display: flex;
+  align-self: center;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  color: black;
+}
+.gender>label{
+  color: white;
+}
+
+    
+  
+  input:not([type="radio"]),textarea{
+    display: block;
+    color: black;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+input[type="date"]{
+  display: flex;
+  width: 180px;
+}
+input:hover{
+  border: 2px solid yellow;
+
+}
+label{
+  color:white;
+  display: flex;
+}
+ 
+  h1{
+    justify-self: center;
+  }
+  .loginfooter{
+    display: block;
+    align-self: center;
+    justify-self: center;
+    
+  }
+  input::placeholder,textarea::placeholder{
+    color: black;
+  }
+  .loginfooter a{
+    color: bisque;
+  }
+  @media screen {
+    
+  }
+  
+ */
