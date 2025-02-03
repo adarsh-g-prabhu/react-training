@@ -46,5 +46,58 @@
 //   )
 // }
 
+// import React from 'react'
+// import { memo, useState } from 'react';
+
+// export default function Memo() {
+//   const [name, setName] = useState('');
+//   const [address, setAddress] = useState('');
+//   return (
+//     <>
+//       <label>
+//         Name{': '}
+//         <input value={name} onChange={e => setName(e.target.value)} />
+//       </label>
+//       <label>
+//         Address{': '}
+//         <input value={address} onChange={e => setAddress(e.target.value)} />
+//       </label>
+//       <Greeting name={name} />
+//     </>
+//   );
+// }
+
+// const Greeting = memo(function Greeting({name}) {
+//   console.log("Greeting was rendered ");
+//   return <h3>Hello{name}</h3>;
+// });
+
+
+import React from 'react'
+import { createPortal } from 'react-dom'
+
+function Portal()
+{
+    return(
+        createPortal(<p>Hello world</p>,document.querySelector('#root'))
+    )
+}
+function Portals()
+{
+    return(
+        <p>Hello world but not portal</p>
+    )
+}
+export default function Hooks() {
+    const styles={display: 'none'}
+  return (
+    <div style={styles}>
+        <div> hello world again</div>
+        <Portals/>
+        <Portal/>
+    </div>
+  )
+}
+
 
 

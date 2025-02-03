@@ -1,12 +1,19 @@
 import './App.css';
 import Nav from './nav';
 import Main from './main';
-
+import Login from './login';
+import Registration from './registration';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 function App() {
   return (
     <>
-    <Nav/>
-    <Main/>
+    <Router>
+      <Nav/>
+    <Routes>
+        <Route path='/' element={<Main/>}/>     
+        <Route path="login" element={<Login/>} />
+        <Route path="registration" element={< Registration/>}/>
+      </Routes>
     <footer>
       <div>
         <img
@@ -27,10 +34,10 @@ function App() {
       </div>
       <div className="mid-section-footer">
         <div className="policies">
-          <a href="">Privacy Policy</a>
+          {/* <a href="">Privacy Policy</a>
           <a href="">Terms of Service</a>
           <a href="">Help Centre</a>
-          <a href="">About us</a>
+          <a href="">About us</a> */}
         </div>
         <div className="footer-social-links">
           <h4>Connect with us.</h4>
@@ -59,6 +66,8 @@ function App() {
         </form>
       </div>
     </footer>
+    </Router>
+    
     
   </>
   

@@ -1,12 +1,12 @@
-import {NavLink } from 'react-router';
-import { BrowserRouter as Router,Route, Routes}  from 'react-router';
-import Registration from './registration';
-import Login from './login';
+import {NavLink } from 'react-router-dom';
+// import { BrowserRouter as Router,Route, Routes}  from 'react-router';
+// import Registration from './registration';
+// import Login from './login';
 
 export default function Nav() {
   return (
     <div>
-        <Router>
+        {/* <Router> */}
     <meta charSet="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles/styles.css" />
@@ -18,7 +18,8 @@ export default function Nav() {
       </div>
       <div className="navbar">
         <div className="navitems">
-          <a href="index.html">HOME</a>
+          {/* <a href="index.html">HOME</a> */}
+          <NavLink to='/' end>HOME</NavLink>
         </div>
         <div className="navitems">
           <a href="shop.html">SHOP</a>
@@ -43,12 +44,8 @@ export default function Nav() {
       </div>
     </nav>
 
-    <Routes>
-        
-        <Route path="login" element={<Login/>} />
-        <Route path="registration" element={< Registration/>}/>
-      </Routes>
-      </Router>
+    
+      {/* </Router> */}
     </div>
   )
 }
