@@ -26,7 +26,16 @@ export default function Axios() {
 //     newInstance.interceptors.response.use((response)=> {console.log(response)
 //   return response.data})
 
+
+   useEffect(() => {
+            axios.post('https://reqres.in/api/users', {
+                "name": "Tony Stark",
+                "job": "Engineer"
+            })
+            .then(response => console.log(response))
+            .catch(error => console.log(error))
     
+        }, [])
   return (
     <div>
         <h1>Axios</h1>

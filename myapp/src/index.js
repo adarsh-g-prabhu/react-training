@@ -14,16 +14,16 @@ import Reference from './ref.js';
 import MainPortal from './createPortal.js';
 import StateReducer from './reducer.js';
 import { Provider } from 'react-redux';
-// import store from './store.js';
+import store from './store.js';
 import Counter from './redux.js';
 import Calculator from './calculator.js';
 // import Hooks from './hooks.js';
 import Axios from './Axioss.js';
 import ErrorBoundary from './errorBoundary.js';
 import ReduxJson from './redux2.js';
-import store from './redux2.js'
+// import store from './redux2.js'
  import Memo from './hooks.js'
-
+import Reduxdispatch from './redux-dispatch.js';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <>
@@ -34,7 +34,7 @@ root.render(
     <List />
     <Props />
     <Forms />*/
-        <ErrorBoundary fallback={<p>something went wrong</p>}><Lazy /></ErrorBoundary>
+        // <ErrorBoundary fallback={<p>something went wrong</p>}><Lazy /></ErrorBoundary>
     
 
    /* <Reference/>
@@ -49,8 +49,11 @@ root.render(
     {/* <Provider store={store}>
             <ReduxJson/>
             </Provider> */}
-        <Memo/>
-    {/* <Axios /> */}
+        {/* <Memo/> */}
+    <Axios />
+    <Provider store={store}>
+        <Reduxdispatch/>
+    </Provider>
     </>
 
   
