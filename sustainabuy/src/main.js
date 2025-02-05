@@ -1,6 +1,8 @@
 import React from 'react'
 
 export default function Main() {
+    console.log('user:',sessionStorage.getItem('username'));
+    console.log('password',sessionStorage.getItem('password'))
   return (
     
     <>

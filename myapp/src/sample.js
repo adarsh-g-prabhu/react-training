@@ -27,9 +27,11 @@ const Button = () => {
   };
 
   return (
-    <button onClick={handleClick}>
+    <>
+    <h1>Test Button</h1><button onClick={handleClick}>
       {clicked ? 'Clicked!' : 'Click Me'}
     </button>
+    </>
   );
 };
 

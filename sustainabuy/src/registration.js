@@ -1,8 +1,9 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import './forms.css'
 import { useState } from 'react';
 
 export default function Registration() {
+  const navigate= useNavigate();
 
   const [formData,setFormData]=useState({email:'', fname:'',lname:'',gender:'',dob:'',address:''
     ,phone:'',password:'',cpassword:''})
@@ -88,10 +89,11 @@ export default function Registration() {
       else
       {
        alert('registration success'); 
-      // const jsonData=JSON.stringify(formData)
-      //  localStorage.setItem('userDetails', jsonData);
+      const jsonData=JSON.stringify(formData)
+       localStorage.setItem('userDetails', jsonData);
        
-      //  sessionStorage.setItem('username',formData.email);
+       sessionStorage.setItem('username',formData.email);
+       navigate('/')
       }
  
   }

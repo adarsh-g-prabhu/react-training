@@ -1,9 +1,17 @@
-import {NavLink } from 'react-router-dom';
+import {NavLink, useNavigate } from 'react-router-dom';
 // import { BrowserRouter as Router,Route, Routes}  from 'react-router';
 // import Registration from './registration';
 // import Login from './login';
 
 export default function Nav() {
+  const username =sessionStorage.getItem('username')
+  console.log('user:',username);
+  const navigate= useNavigate();
+  const logout=()=>{
+    alert(`${username} have been logged out`);
+   sessionStorage.removeItem('username')
+    navigate('/')
+  }
   return (
     <div>
         {/* <Router> */}
@@ -27,14 +35,18 @@ export default function Nav() {
         <div className="navitems">
           <a href="about-us.html">ABOUT US</a>
         </div>
-        <div className="navitems">
+       { !sessionStorage.getItem('username')?(<><div className="navitems">
           {/* <a href="registration.html">REGISTRATION</a> */}
-          <NavLink to="/registration" end>Registration</NavLink>
+          <NavLink to="/registration" end>REGISTRATION</NavLink>
         </div>
         <div className="navitems">
           {/* <a href="login.html">LOGIN</a> */}
-          <NavLink to="/login" end>Login</NavLink>
+          <NavLink to="/login" end>LOGIN</NavLink>
         </div>
+        </>):(<div><div className="navitems">
+          {/* <a href="registration.html">REGISTRATION</a> */}
+          <NavLink onClick={logout} end>LOGOUT</NavLink>
+        </div></div>)}
         <div className="navitems">
           <a href="contact-us.html">CONTACT US</a>
         </div>
