@@ -11,10 +11,7 @@ console.log(myURL.href)
 const querystring = require('node:querystring');
 
 console.log(querystring.decode(myURL.href));
-
-// Assuming gbkDecodeURIComponent function already exists...
-
-console.log(
+    console.log(
     querystring.stringify({ foo: 'bar', baz: ['qux', 'quux'], corge: '' }));
 
 

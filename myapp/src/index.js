@@ -24,6 +24,7 @@ import ReduxJson from './redux2.js';
 // import store from './redux2.js'
  import Memo from './hooks.js'
 import Reduxdispatch from './redux-dispatch.js';
+import BrandNewComponent from './hoc.js';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <>
@@ -54,6 +55,7 @@ root.render(
     <Provider store={store}>
         <Reduxdispatch/>
     </Provider>
+    <BrandNewComponent/>
     </>
 
   
