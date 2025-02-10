@@ -10,12 +10,12 @@ import Todos from './todos.js';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/* <App /> */}
+    <App />
     {/* <Registration/> */}
 
     {/* <Control/> */}
     {/* <Axios/> */}
-    <Todos/>
+    {/* <Todos/> */}
 
   </React.StrictMode>
 );

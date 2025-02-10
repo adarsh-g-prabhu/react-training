@@ -1,38 +1,18 @@
-// import React from 'react'
-
-// export default function Sample() {
-//     const value = 5;
-//   return (
-//     <div>
-//         <p>Hello World</p>
-//         {value}
-//     </div>
-//   )
-  
-// }
-// const sum=(a,b)=>{
-//  return a+b;
-// }
-
-// export {sum} ;
-
-// Button.js
 import React, { useState } from 'react';
 
-const Button = () => {
-  const [clicked, setClicked] = useState(false);
+const Sample = () => {
+  const [message, setMessage] = useState('');
 
   const handleClick = () => {
-    setClicked(true);
+    setMessage('Hello World!');
   };
 
   return (
-    <>
-    <h1>Test Button</h1><button onClick={handleClick}>
-      {clicked ? 'Clicked!' : 'Click Me'}
-    </button>
-    </>
+    <div>
+      <button onClick={handleClick}>Click me</button>
+      <h3>{message}</h3>
+    </div>
   );
 };
 
-export default Button;
+export default Sample;
