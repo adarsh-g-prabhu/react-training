@@ -1,0 +1,198 @@
+
+MongoDB assessment tasks.
+1. Create a MongoDB Database and Collection
+Task: Create a database called Library and a collection called Books. Insert at least five documents into the Books collection with fields like title, author, publishedYear, and genre.
+
+use Library
+switched to db Library
+Library> db.Books.insertMany([{title:'harry potter',author: 'jk rowling', publishedYear:2002,genre:['fantasy','school','action']},])
+Library> db.Books.find()
+
+Library> db.Books.insertMany([{title:'harry potter',author: 'jk rowling', publishedYear:2002,genre:['fantasy','school','action']},{title:'lord of the rings',author: 'jrr tolkien', publishedYear:1954,genre:['fantasy','adventure']},{title:'shinning',author: 'stephen king', publishedYear:1978,genre:['horror','thriller']},{title:'hunger games',author: 'suzanne collins', publishedYear:2004,genre:['action']},{title:'to kill a mockingbird',author: 'harper lee', publishedYear:1960,genre:['drama']}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('67aaee437fd5c88224544ca7'),
+    '1': ObjectId('67aaee437fd5c88224544ca8'),
+    '2': ObjectId('67aaee437fd5c88224544ca9'),
+    '3': ObjectId('67aaee437fd5c88224544caa'),
+    '4': ObjectId('67aaee437fd5c88224544cab')
+  }
+}
+Library> db.Books.find()
+[
+  {
+    _id: ObjectId('67aaee437fd5c88224544ca7'),
+    title: 'harry potter',
+    author: 'jk rowling',
+    publishedYear: 2002,
+    genre: [ 'fantasy', 'school', 'action' ]
+  },
+  {
+    _id: ObjectId('67aaee437fd5c88224544ca8'),
+    title: 'lord of the rings',
+    author: 'jrr tolkien',
+    publishedYear: 1954,
+    genre: [ 'fantasy', 'adventure' ]
+  },
+  {
+    _id: ObjectId('67aaee437fd5c88224544ca9'),
+    title: 'shinning',
+    author: 'stephen king',
+    publishedYear: 1978,
+    genre: [ 'horror', 'thriller' ]
+  },
+  {
+    _id: ObjectId('67aaee437fd5c88224544caa'),
+    title: 'hunger games',
+    author: 'suzanne collins',
+    publishedYear: 2004,
+    genre: [ 'action' ]
+  },
+  {
+    _id: ObjectId('67aaee437fd5c88224544cab'),
+    title: 'to kill a mockingbird',
+    author: 'harper lee',
+    publishedYear: 1960,
+    genre: [ 'drama' ]
+  }
+]
+
+
+
+
+
+2. Insert Data into a Collection
+Task: Insert two documents into a collection called Students with the following fields:
+name: String
+age: Number
+subjects: Array of Strings
+grade: String
+Example:
+{ "name": "John Doe", "age": 20, "subjects": ["Math", "Science"], "grade": "A" }
+
+db.Students.insertOne({ name: 'James samuel', age: 18, subjects: ['Math','social science', 'Science','english','hindi'], grade: 'B' })
+{
+  acknowledged: true,
+  insertedId: ObjectId('67aaefdb7fd5c88224544cac')
+}
+Library> db.Students.insertOne({ name: 'James samuel', age: 18, subjects: ['Math','computer science', 'economics','english','malayalam'], grade: 'A' })
+{
+  acknowledged: true,
+  insertedId: ObjectId('67aaf0037fd5c88224544cad')
+}
+Library> db.Students.updateOne({_id: ObjectId('67aaf0037fd5c88224544cad')},{$set:{name:'harry styles', age: 19}}
+... )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Library> db.Students.find()
+[
+  {
+    _id: ObjectId('67aaefdb7fd5c88224544cac'),
+    name: 'James samuel',
+    age: 18,
+    subjects: [ 'Math', 'social science', 'Science', 'english', 'hindi' ],
+    grade: 'B'
+  },
+  {
+    _id: ObjectId('67aaf0037fd5c88224544cad'),
+    name: 'harry styles',
+    age: 19,
+    subjects: [ 'Math', 'computer science', 'economics', 'english', 'malayalam' ],
+    grade: 'A'
+  }
+]
+
+
+
+
+3. Basic Querying
+Task: Write a query to retrieve all documents from the Books collection where the publishedYear is greater than 2000.
+
+Library> db.Books.find({publishedYear:{$gt:2000}})
+[
+  {
+    _id: ObjectId('67aaee437fd5c88224544ca7'),
+    title: 'harry potter',
+    author: 'jk rowling',
+    publishedYear: 2002,
+    genre: [ 'fantasy', 'school', 'action' ]
+  },
+  {
+    _id: ObjectId('67aaee437fd5c88224544caa'),
+    title: 'hunger games',
+    author: 'suzanne collins',
+    publishedYear: 2004,
+    genre: [ 'action' ]
+  }
+]
+
+
+4. Query with Conditions
+Task: Write a query to find all students who are older than 18 and have a grade of "A".
+
+Library> db.Students.find({age:{$gt:18},grade:{$eq:'A'}})
+[
+  {
+    _id: ObjectId('67aaf0037fd5c88224544cad'),
+    name: 'harry styles',
+    age: 19,
+    subjects: [ 'Math', 'computer science', 'economics', 'english', 'malayalam' ],
+    grade: 'A'
+  }
+]
+
+
+5. Update a Document
+Task: Update the Books collection to change the genre of a specific book to "Science Fiction" where the title is "The Great Adventure".
+
+
+Library> db.Books.insertOne({title:'the great adventure', author:'john doe', publishedYear:1995, genre:['adventure']})
+{
+  acknowledged: true,
+  insertedId: ObjectId('67ab1aef83c595621a544ca8')
+}
+Library> db.Books.updateOne({title:'the great adventure'},{$set:{genre:['science fiction']}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+6. Delete a Document
+Task: Delete one document from the Students collection where the name is "John Doe".
+
+Library> db.Students.deleteOne({name:{$eq:'John Doe'}})
+{ acknowledged: true, deletedCount: 1 }
+Library> db.Students.find()
+[
+  {
+    _id: ObjectId('67aaefdb7fd5c88224544cac'),
+    name: 'James samuel',
+    age: 18,
+    subjects: [ 'Math', 'social science', 'Science', 'english', 'hindi' ],
+    grade: 'B'
+  },
+  {
+    _id: ObjectId('67aaf0037fd5c88224544cad'),
+    name: 'harry styles',
+    age: 19,
+    subjects: [ 'Math', 'computer science', 'economics', 'english', 'malayalam' ],
+    grade: 'A'
+  }
+]
+
+7. Aggregation Task
+Task: Write an aggregation query to calculate the average age of all students in the Students collection.
+
+Library> db.Students.aggregate([{$group:{_id: 1,average:{$avg:'$age'}}}])
+[ { _id: 1, average: 18.5 } ]
+
+ 
