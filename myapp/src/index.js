@@ -23,6 +23,7 @@ import ErrorBoundary from './errorBoundary.js';
 import ReduxJson from './redux2.js';
 // import store from './redux2.js'
  import Memo from './hooks.js'
+ import Filtering from './Filtering.js';
 import Reduxdispatch from './redux-dispatch.js';
 import BrandNewComponent from './hoc.js';
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -56,6 +57,7 @@ root.render(
         <Reduxdispatch/>
     </Provider>
     <BrandNewComponent/>
+    <Filtering/>
     </>
 
   

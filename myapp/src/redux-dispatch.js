@@ -4,7 +4,7 @@ import { increment,decrement } from './redux2'
 import { useDispatch } from 'react-redux'
 export default function Reduxdispatch() {
     const count= useSelector(state=>state.counter.value)
-    const dispatch=useDispatch()
+    const dispatch = useDispatch()
   return (
     <div>
         <button type='button' onClick={()=>dispatch(increment())}>+</ button>
