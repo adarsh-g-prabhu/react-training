@@ -123,6 +123,8 @@ app.delete('/books/:id',async(req,res)=>{
         res.status(404).send('book not found')
     }
 })
+
+app.get('/',)
 const port=3000;
 app.listen(port,()=>{
     console.log(`app kelkunu - http://localhost:${port}`);

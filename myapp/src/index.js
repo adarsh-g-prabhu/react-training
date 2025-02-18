@@ -26,10 +26,11 @@ import ReduxJson from './redux2.js';
  import Filtering from './Filtering.js';
 import Reduxdispatch from './redux-dispatch.js';
 import BrandNewComponent from './hoc.js';
+import BooksCrud from './bookAxios.js';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <>
-    <MyApp />
+    {/* <MyApp /> */}
     {/* <LoginPage /> */}
     {/* <UseStates />
     <Tictactoe />
@@ -52,12 +53,13 @@ root.render(
             <ReduxJson/>
             </Provider> */}
         {/* <Memo/> */}
-    <Axios />
+    {/* <Axios />
     <Provider store={store}>
         <Reduxdispatch/>
     </Provider>
     <BrandNewComponent/>
-    <Filtering/>
+    <Filtering/> */}
+    <BooksCrud/>
     </>
 
   
