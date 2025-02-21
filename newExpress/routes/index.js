@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
-
+const auth=require('../middlewares/auth')
 router.get('/', function(req, res) {
   res.render('index');
 });
@@ -15,6 +15,7 @@ router.get('/register',authController.getRegister);
 router.post('/register',authController.postRegister);
 
 router.get('/adminDashboard',authController.adminDashboard);
-router.get('/viewusers',authController.viewUsers)
+router.get('/viewUsers',auth.verifyToken,authController.viewUsers);
+
 
 module.exports = router;

@@ -1,5 +1,4 @@
 const User =require('../models/model')
-const bcrypt= require('bcryptjs')
 const services=require('../services/services')
 
 const getLogin = (req, res) => {
@@ -7,31 +6,22 @@ const getLogin = (req, res) => {
     res.render('login', { message: null });
   };
   
-  const postLogin = async (req, res) => {
-    const { email, password } = req.body;
-    const userData= await User.findOne({email: email});
-    if(!userData)
-    {
-      return res.status(400).json({message:'invalid email'})
-    }
+const postLogin = async (req, res) => {
+  const { email, password } = req.body;
 
-    const passwordMatch= await bcrypt.compare(password,userData.password);
-    if(passwordMatch)
-    {
-      if (userData.email='admin@gmail.com')
-        return res.status(300).redirect('/adminDashboard')
-      else
-        return res.status(300).redirect('/')
-    }
-    else
-    {
-      res.status(400).json({message:'inavlid password'})
-    }
-  };
+  const loginResult = await services.loginAuthentication(email, password);
+  
+  if (!loginResult.success) {
+    return res.status(400).json({ message: loginResult.message });
+  }
+  
+  res.status(200).json({ token: loginResult.token, user: loginResult.user });
+};
+
 
   const getRegister = (req, res) => {
- 
-    res.render('register');
+    console.log('register')
+  //   res.render('register');
   };
 
   /**
@@ -53,13 +43,14 @@ const getLogin = (req, res) => {
   }
   const viewUsers = async(req,res)=>
   {
-    const viewUsers= await services.viewUsers();
-    if(!viewUsers)
+    const viewUser= await services.viewUsers();
+    if(!viewUser)
       res.status(400).json({message:'error fetch'})
     else
-      res.render('view-user',{userData:viewUsers})
+      res.status(200).json(viewUser);
   }
 
+  
   
 
 
