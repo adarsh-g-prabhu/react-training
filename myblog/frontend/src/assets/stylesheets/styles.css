@@ -1,0 +1,106 @@
+/* Reset default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  /* Center the login container */
+  .login-container {
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Title styling */
+  .login-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Form elements styling */
+  .login-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  
+  .login-container input{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Button styling */
+  .login-container button {
+    width: 100%;
+    padding: 10px;
+    background: #007BFF;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .login-container button:hover {
+    background: #0056b3;
+  }
+  
+  /* Error message styling */
+  .login-container .error {
+    color: #d8000c;
+    background-color: #ffbaba;
+    border: 1px solid #d8000c;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  
+  .table-view {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+  }
+  
+  .table-view th, .table-view td {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    text-align: left;
+  }
+  
+  .table-view th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+
+  .nav-bar a{
+   margin: 5px 5px 5px 5px;
+  }
+
+
+  .blogpost img{
+    width: 300px;
+    height: 300px;
+  }
+  .blogpost h3{
+    font-style: oblique;
+    font-size: x-large;
+    background-color: lightgray;
+  }
