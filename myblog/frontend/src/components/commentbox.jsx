@@ -1,20 +1,21 @@
 import { useState , useEffect } from "react";
 import api from "../api";
-export default function CommentBox({postId}) {
+export default function CommentBox(postId) {
 const [comment,setComment]=useState('');
 const [comments,setComments]=useState([])
-const fetchComments = async () => {
-  try {
-    const response = await api.get(`/comment/${postId}`);
-    setComments(response.data);
-  } catch (error) {
-    console.error("Error fetching comments", error);
-  }
-};
 
 useEffect(() => {
+  const fetchComments = async () => {
+    try {
+      const response = await api.get(`/comment/${postId}`);
+      setComments(response.data);
+      console.log(comments);
+    } catch (error) {
+      console.error("Error fetching comments", error);
+    }
+  };
   fetchComments();
-}, []); 
+}, [postId]); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();

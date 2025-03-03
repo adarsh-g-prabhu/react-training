@@ -26,13 +26,14 @@ const BlogFeed = () => {
       ) : (
         posts.map((post) => (
           
-            <><h3>{post.title}</h3>
+            
+            <div key={post._id}><h3>{post.title}</h3>
                 <p>By {post.author} | {new Date(post.createdAt).toLocaleDateString()}</p>
                 <p>{post.content.substring(0, 150)}...</p>
                 <Link to={`/posts/${post._id}`}>
                     Read More
                 </Link>
-</>
+            </div>
                 ))
                 )}
             </div>

@@ -11,10 +11,10 @@ const viewUsers =async(req,res)=>
    else
     return users;
 }
-const generateToken=  async (userid,userEmail,name)=>
+const generateToken=  async (userEmail,userId,name,userRole)=>
 {
    const token= jwt.sign(
-    { id: userid, email: userEmail,username:name}, 
+    { userId: userId, email: userEmail,username:name,userRole:userRole}, 
     process.env.JWT_SECRET_KEY, 
     { expiresIn: "1h" } 
   );
@@ -37,7 +37,7 @@ const loginAuthentication = async (userEmail, password) => {
         return { success: false, message: "Invalid password" };
       }
   
-      const token = await generateToken(userData.email, userData.password, userData.name);
+      const token = await generateToken(userData.email, userData._id, userData.name,userData.userRole);
 
       return { success: true, token, user: userData };
     } catch (error) {

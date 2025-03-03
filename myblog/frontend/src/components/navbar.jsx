@@ -5,11 +5,24 @@ import '../assets/stylesheets/styles.css'
 function Navbar() {
 
   const token=localStorage.getItem('token');
-  const Navigate= useNavigate()
+  const navigate= useNavigate()
   const logout=()=>{
+    try{
     localStorage.removeItem('token');
-    localStorage.removeItem('email')
-    Navigate('/')
+    localStorage.removeItem('id');
+   
+    alert(`${localStorage.getItem('username')} has logged out`);
+    localStorage.removeItem('username');
+    
+    localStorage.removeItem('userRole');
+   
+    navigate('/')
+    window.location.reload(); 
+    }
+    catch(err)
+    {
+      console.log('error',err)
+    }
   }
 
 

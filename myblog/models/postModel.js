@@ -13,15 +13,15 @@ const postSchema = mongoose.Schema(
       trim: true,
     },
     author: {
-      type: String,
-      // type: mongoose.Schema.Types.ObjectId,
+     
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-    //   required: true,
+      required: true,
     },
     imageUrl: { type: String },
     photos: [
       {
-        url: { type: String, required: true },
+        url: { type: String},
       },
     ],
     tags: [
@@ -30,14 +30,7 @@ const postSchema = mongoose.Schema(
         trim: true,
       },
     ],
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-    updatedAt: {
-      type: Date,
-      default: Date.now,
-    },
+ 
   },
   { timestamps: true }
 );

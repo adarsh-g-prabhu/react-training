@@ -1,3 +1,5 @@
+import commentService from '../services/commentService'
+
 const addComment=async(req,res)=>{
     try{
         const postId=req.params.id;
@@ -15,3 +17,22 @@ const addComment=async(req,res)=>{
     }
 }
 
+const getComments=async(req,res)=>{
+    try{
+        const postId=req.params.id;
+
+        const comments= await commentService.getComments({postId});
+        if (comments)
+            return res.status(200).json({message:'comments found'});
+        else
+            return res.status(400).json({message:'comments not found'})
+    }
+    catch(err)
+    {
+        console.log('error',err)
+    }
+}
+
+module.exports={
+    addComment,getComments
+}

@@ -25,7 +25,7 @@ export default function PostView() {
           <h3>{data.title}</h3>
           <p>By {data.author} | {new Date(data.createdAt).toLocaleDateString()}</p>
           <p>{data.tags}</p>
-          <img src={data.imageUrl} alt='image about ' />
+          <img src={'http://localhost:3000/'+data.imageUrl} alt='image about ' />
           <p>{data.content}</p>
 
 

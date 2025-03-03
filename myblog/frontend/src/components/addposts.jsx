@@ -9,20 +9,18 @@ const CreatePost = () => {
     tags: [],
     image: null,
     imageUrl: "",
-    author: ''
+    author: "",
   });
 
   const navigate = useNavigate();
 
-  useEffect(()=>{
-
-    const author = localStorage.getItem("username");
-    console.log(author);
+  useEffect(() => {
+    const author = localStorage.getItem("id");
     setFormData((prevData) => ({
       ...prevData,
       author: author,
     }));
-  },[])
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,14 +30,12 @@ const CreatePost = () => {
     }));
   };
 
-  // Handle file selection
-  // const handleFileChange = (e) => {
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     image: e.target.files[0],
-  //   }));
-  // };
-
+  const handleFileChange = (e) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      image: e.target.files[0],
+    }));
+  };
 
   const handleTagsChange = (e) => {
     setFormData((prevData) => ({
@@ -49,8 +45,9 @@ const CreatePost = () => {
   };
 
   const handleSubmit = async (e) => {
+    try {
     e.preventDefault();
-    
+
     const postData = new FormData();
     postData.append("author", formData.author);
     postData.append("title", formData.title);
@@ -62,12 +59,15 @@ const CreatePost = () => {
     } else if (formData.imageUrl) {
       postData.append("imageUrl", formData.imageUrl);
     }
+    console.log('the upload form',postData)
 
-    try {
-      console.log('poost',postData)
-      await api.post("/createPost", postData);
-      navigate("/");
-    } catch (error) {
+    
+      const posting=await api.post("/createPost", postData);
+      if (posting)
+      {
+        console.log('post added successfully');
+      navigate("/myposts");
+    } }catch (error) {
       console.error("Error creating post:", error);
     }
   };
@@ -75,43 +75,14 @@ const CreatePost = () => {
   return (
     <div>
       <h2>Create a Post</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          value={formData.title}
-          onChange={handleChange}
-          required
-        />
-        <textarea
-          name="content"
-          placeholder="Content"
-          value={formData.content}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="tags"
-          placeholder="Tags (comma-separated)"
-          value={formData.tags.join(", ")}
-          onChange={handleTagsChange}
-        />
-        {/* <div>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-          />
-        </div> */}
-        <input
-          type="text"
-          name="imageUrl"
-          placeholder="Or enter image URL"
-          value={formData.imageUrl}
-          onChange={handleChange}
-        />
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
+        <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} required />
+        <textarea name="content" placeholder="Content" value={formData.content} onChange={handleChange} required />
+        <input type="text" name="tags" placeholder="Tags (comma-separated)" value={formData.tags.join(", ")} onChange={handleTagsChange} />
+        <div>
+          <input type="file" accept="image/*" onChange={handleFileChange} />
+        </div>
+        <input type="text" name="imageUrl" placeholder="Or enter image URL" value={formData.imageUrl} onChange={handleChange} />
         <button type="submit">Create Post</button>
       </form>
     </div>

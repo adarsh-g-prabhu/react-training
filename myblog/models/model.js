@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
-
+const roles = ['user', 'admin'];
 const userSchema = mongoose.Schema(
   {
     name: {
@@ -34,15 +34,11 @@ const userSchema = mongoose.Schema(
       },
   
     },
-    // role: {
-    //   type: String,
-    //   enum: roles,
-    //   default: 'user',
-    // },
-    // isEmailVerified: {
-    //   type: Boolean,
-    //   default: false,
-    // },
+    userRole: {
+      type: String,
+      enum: roles,
+      default: 'user',
+    },
   },
   {
     timestamps: true,

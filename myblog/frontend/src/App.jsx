@@ -9,6 +9,9 @@ import Admindashboard from './components/admindashboard';
 import ViewUsers from './components/viewUsers';
 import CreatePost from './components/addposts';
 import PostView from './components/postView'
+import MyPosts from './components/myPosts';
+import UpdatePosts from './components/updatePosts';
+import SearchResult from './components/searchresults';
 
 function App() {
 
@@ -25,6 +28,9 @@ function App() {
         <Route path='admin/viewUsers' element={<ViewUsers/>}/>
         <Route path='/add-posts' element={<CreatePost/>}/>
         <Route path='/posts/:id' element={<PostView/>}/>
+        <Route path='/myposts/' element={<MyPosts/>}/>
+        <Route path='/updatePost/:id' element={<UpdatePosts/>}/>
+        <Route path='/search/' element={<SearchResult/>}/>
         {/* <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} /> */}
       </Routes>

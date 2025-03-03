@@ -1,5 +1,5 @@
 const Post=require('../models/postModel')
-
+const mongoose= require('mongoose')
 const getAllPosts=async(req,res)=>{
 
    const posts = await Post.find();
@@ -11,13 +11,9 @@ const getAllPosts=async(req,res)=>{
 
 const createPosts= async(postData)=>{
     try{
-    // const author=req.body.email;
-    // postData.author=author;
-    console.log(postData)
+    
     const posted=await Post.create(postData)
-    console.log('posted')
-    // posted?res.status(200).json({message:'successfully created Post'}):
-    // res.status(400).json({message:'error creating post'})
+    console.log('posted',posted)
     return(posted)
     }
     catch(err)
@@ -35,4 +31,51 @@ const fetchPostById=async(postId)=>{
     else
      return posts;
  }
-module.exports={getAllPosts,createPosts,fetchPostById}
+
+ const deletePostById=async(postId)=>{
+ 
+    const posts = await Post.deleteOne({_id:postId});
+    if (!posts)
+     return res.json({message:'No posts Found'})
+    else
+     return posts;
+ }
+
+ const updatePostById =async(postId,postData)=>{
+    console.log(postId, 'dataaa', postData)
+    const posts = await Post.findOneAndUpdate({_id:postId},postData,{new:true});
+    if (!posts)
+     console.log('error in updatation')
+    else
+     return posts;
+ }
+
+ const postsByAuthor= async(authorId)=>{
+    
+    const posts=await Post.find({ author: new mongoose.Types.ObjectId(authorId) }).sort({ createdAt: -1 });
+ 
+    if (!posts)
+     return res.json({message:'No posts Found'})
+    else
+     return posts;
+ }
+
+ const searchPosts=async(query)=>{
+    try{
+        console.log('query is',query)
+    const result=await Post.find({ title: { $regex: query, $options: "i" }});
+    console.log(result);
+
+    if (result)
+    return result
+
+    }
+    catch(err)
+    {
+        console.log('error fetching',err)
+    }
+ }
+
+module.exports={getAllPosts,createPosts,
+    fetchPostById , deletePostById , 
+    updatePostById , postsByAuthor , searchPosts}
