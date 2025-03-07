@@ -1,12 +1,12 @@
 'use client'
 
 import Image from "next/image"
-import Link from "next/link"
-import { useRouter } from "next/router";
+// import Link from "next/link"
+import { useRouter } from "next/navigation";
 import { useState } from "react"
 export default function Pages() {
   const [user,setUser]=useState('');
-  // const router=useRouter();
+  const router=useRouter();
   return (
     <div className="flex justify-center items-center bg-gray-500 flex-col">
 
@@ -16,8 +16,8 @@ export default function Pages() {
         <h1>hai there</h1>
           
         <div><input type="text" value={user} onChange={(e)=>setUser(e.target.value)}/></div>
-        {/* <button onClick={()=>router.push(`/user/${user}`)}>go to {user}</button> */}
-        <Link href={`/user/${user}`}>go to {user}</Link>
+        <button onClick={()=>router.push(`/user/${user}`)}>go to {user}</button>
+        {/* <Link href={`/user/${user}`}>go to {user}</Link> */}
     </div>
   )
 }
