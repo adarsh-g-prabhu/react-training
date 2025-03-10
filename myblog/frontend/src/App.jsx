@@ -12,6 +12,8 @@ import PostView from './components/postView'
 import MyPosts from './components/myPosts';
 import UpdatePosts from './components/updatePosts';
 import SearchResult from './components/searchresults';
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 function App() {
 

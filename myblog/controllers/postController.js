@@ -18,7 +18,7 @@ const getPostsFeed=async(req,res)=>{
 const createPost = async (req, res) => {
     try {
       let postData = req.body;
-  
+      postData.tags = JSON.parse(postData.tags); 
       if (req.file) {
         postData.imageUrl = `/images/${req.file.filename}`;
       }

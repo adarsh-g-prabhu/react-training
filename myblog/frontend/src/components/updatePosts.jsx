@@ -97,21 +97,23 @@ const UpdatePosts = () => {
   };
 
   return (
-    <div>
+    <div className="form-container">
       <h2>Update Post</h2>
       {loading ? (
         <p>Loading...</p>
       ) : (
         
         <form onSubmit={handleSubmit}>
+          <div className="form-items">
           <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} required />
           <textarea name="content" placeholder="Content" value={formData.content} onChange={handleChange} required />
           <input type="text" name="tags" placeholder="Tags (comma-separated)" value={formData.tags.join(", ")} onChange={handleTagsChange} />
           <div>
             <input type="file" accept="image/*" onChange={handleFileChange} />
           </div>
-          <input type="text" name="imageUrl" placeholder="Or enter image URL" value={formData.imageUrl} onChange={handleChange} />
+          {/* <input type="text" name="imageUrl" placeholder="Or enter image URL" value={formData.imageUrl} onChange={handleChange} /> */}
           <button type="submit">Update Post</button>
+          </div>
         </form>
       )}
     

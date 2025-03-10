@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
 
+
 const CreatePost = () => {
   const [formData, setFormData] = useState({
     title: "",
@@ -73,17 +74,17 @@ const CreatePost = () => {
   };
 
   return (
-    <div>
+    <div className="form-container">
       <h2>Create a Post</h2>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} required />
+        <div className="form-items">
+          <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} required />
         <textarea name="content" placeholder="Content" value={formData.content} onChange={handleChange} required />
         <input type="text" name="tags" placeholder="Tags (comma-separated)" value={formData.tags.join(", ")} onChange={handleTagsChange} />
-        <div>
-          <input type="file" accept="image/*" onChange={handleFileChange} />
-        </div>
+        <input type="file" accept="image/*" onChange={handleFileChange} />
         <input type="text" name="imageUrl" placeholder="Or enter image URL" value={formData.imageUrl} onChange={handleChange} />
         <button type="submit">Create Post</button>
+        </div>
       </form>
     </div>
   );

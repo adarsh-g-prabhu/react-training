@@ -32,12 +32,27 @@ export default function Homepage() {
           <Link to='/add-posts'>Add Posts</Link>
           <Link to='/myposts/'>My Posts</Link>
         </div><h1>welcome {currentUser.username} </h1>
+        
         <SearchPosts/>
         <PostFeed/></>
         
         :
-        <h1>welcome Guest </h1>
-        
+        <div className="landing-container">
+     
+      <header className="hero">
+        <h1>Welcome to My Blog</h1>
+        <p>Explore amazing stories, insights, and ideas from various authors.</p>
+        <div className="hero-buttons">
+          <Link to="/register" className="btn">Register Now</Link>
+  
+        </div>
+      </header>
+      <img src="/Blogging-1024x600.png"/>
+
+      <footer className="footer">
+        <p>&copy; {new Date().getFullYear()} My Blog. All rights reserved.</p>
+      </footer>
+    </div>
 
 }
   

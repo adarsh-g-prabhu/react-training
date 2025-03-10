@@ -4,6 +4,7 @@ const router=require('./router');
 const mongoose=require('mongoose')
 const path=require('node:path')
 const MONGODB_URL= 'mongodb://127.0.0.1:27017/crudSample'
+
 const connectDb= async()=>{
     try{
       await mongoose.connect(MONGODB_URL);

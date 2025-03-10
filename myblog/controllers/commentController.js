@@ -1,14 +1,16 @@
-import commentService from '../services/commentService'
+const commentService =require('../services/commentService')
 
 const addComment=async(req,res)=>{
     try{
         const postId=req.params.id;
         const {comment,userId}= req.body;
-        console.log(comment);
+        console.log('the comment',comment,userId,postId);
        
-        const postCreation= await commentService.createComment({postId,userId,comment});
-        if (postCreation)
-            return res.status(200).json({message:'created'});
+        const commentCreation= await commentService.createComment(postId,userId,comment);
+        if (commentCreation)
+            return res.status(200).json({message:'created'});   
+        else
+            return res.status(400).json({message:'commenting failed'})
 
     }
     catch(err)
@@ -20,10 +22,11 @@ const addComment=async(req,res)=>{
 const getComments=async(req,res)=>{
     try{
         const postId=req.params.id;
-
-        const comments= await commentService.getComments({postId});
+        console.log('commentid',postId)
+        const comments= await commentService.getComment(postId);
+        console.log('comments is:',comments)
         if (comments)
-            return res.status(200).json({message:'comments found'});
+            return res.status(200).json(comments);
         else
             return res.status(400).json({message:'comments not found'})
     }

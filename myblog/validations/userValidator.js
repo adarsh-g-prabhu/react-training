@@ -2,7 +2,8 @@ const Joi =require('joi')
 
 const userValidationSchema= Joi.object(
     {
-        username:Joi.string()
+      
+  username:Joi.string()
   .min(3)
   .max(30)
   .required()
@@ -12,6 +13,7 @@ const userValidationSchema= Joi.object(
     'string.min': `"name" should have a minimum length of {#limit}`,
     'any.required': `"name" is a required field`
   }),
+
   password: Joi.string()
   .pattern(new RegExp('^(?=.*[A-Za-z])(?=.*\d)[A-Za-z0-9]{6,30}$'))
   .required()
@@ -19,6 +21,7 @@ const userValidationSchema= Joi.object(
     'string.empty': `"password" cannot be an empty field`,
     'any.required': `"password" is a required field`
     }),
+
     email: Joi.string()
         .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
 

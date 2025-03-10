@@ -9,6 +9,7 @@ const getLogin = (req, res) => {
 
 
     const postLogin = async (req, res) => {
+      try{
     const { email, password } = req.body;
       console.log('poster')
     const loginResult = await services.loginAuthentication(email, password);
@@ -18,6 +19,11 @@ const getLogin = (req, res) => {
     }
 
     res.status(200).json({ token: loginResult.token, user: loginResult.user });
+  }
+  catch(err)
+  {
+    console.log('error at login')
+  }
     };
 
 
@@ -33,31 +39,45 @@ const getLogin = (req, res) => {
    * @returns {Promise<User>}
    */
     const postRegister = async (req, res) => {
+      try{
       const userBody = req.body;
       if (await User.isEmailTaken(userBody.email)) {
         return res.json({message:'error happened'})
       }
-      await User.create(userBody);
-      return res.redirect('/');
+      return await User.create(userBody);
+      // return res.redirect('/');
+    }catch(err)
+    {
+      console.log('error- register',err)
+    }
+
     };
 
-  const adminDashboard=(req,res)=>{
-    res.render('adminDashboard')
-  }
+  // const adminDashboard=(req,res)=>{
+  //   res.render('adminDashboard')
+  // }
+
+
   const viewUsers = async(req,res)=>
   {
-    console.log('hi')
+    // console.log('hi')
+    try{
     const viewUser= await services.viewUsers();
     console.log(viewUser);
     if(!viewUser)
       res.status(400).json({message:'error fetch'})
     else
       res.status(200).json(viewUser);
+}
+catch(err)
+{
+  console.log('error',err);
+}
   }
 
   
   
 
 
-  module.exports = { getLogin, postLogin, postRegister , getRegister , adminDashboard, viewUsers};
+  module.exports = { getLogin, postLogin, postRegister , getRegister , viewUsers};
   

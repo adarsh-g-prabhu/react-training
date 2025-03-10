@@ -19,20 +19,22 @@ const BlogFeed = () => {
 
 
   return (
-    <div>
+    <div className="post-feed">
       <h2 >Latest Blog Posts</h2>
       {posts.length === 0 ? (
         <p>No posts available.</p>
       ) : (
         posts.map((post) => (
           
-            
-            <div key={post._id}><h3>{post.title}</h3>
+            <div className="postContainer" key={post._id}>
+            <img src={'http://localhost:3000/'+post.imageUrl} alt={`image about ${post.title}`}/>
+            <div className="postCard"><h3>{post.title}</h3>
                 <p>By {post.author} | {new Date(post.createdAt).toLocaleDateString()}</p>
                 <p>{post.content.substring(0, 150)}...</p>
                 <Link to={`/posts/${post._id}`}>
                     Read More
                 </Link>
+            </div>
             </div>
                 ))
                 )}

@@ -6,6 +6,7 @@ var logger = require('morgan');
 require('dotenv').config();
 const mongoose=require('mongoose');
 const jwt= require('jsonwebtoken');
+const errorHandler=require('./middlewares/error')
 
 // var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
@@ -48,6 +49,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/',routes);
 
 
+app.use(errorHandler);
 
 app.use(function(req, res, next) {
   next(createError(404));

@@ -5,19 +5,18 @@ import { Link, useNavigate } from "react-router-dom";
 const MyPosts = () => {
   const [posts, setPosts] = useState([]);
   const [author, setAuthor] = useState(null);
-  const [username,setUsername]=useState(localStorage.getItem('username'))
-  const navigate=useNavigate();
+  const [username, setUsername] = useState(localStorage.getItem("username"));
+  const navigate = useNavigate();
+
   useEffect(() => {
-   
     const storedAuthor = localStorage.getItem("id");
     setAuthor(storedAuthor);
-    setUsername(localStorage.getItem('username'))
-    
+    setUsername(localStorage.getItem("username"));
   }, []);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      if (!author) return; 
+      if (!author) return;
 
       console.log("Fetching posts for author:", author);
       try {
@@ -36,7 +35,7 @@ const MyPosts = () => {
     try {
       await api.delete(`/posts/${postId}`);
       console.log("Post deleted");
-      navigate('/myposts/')
+      navigate("/myposts/");
       setPosts(posts.filter((post) => post._id !== postId));
     } catch (err) {
       console.error("Error deleting post:", err);
@@ -44,21 +43,24 @@ const MyPosts = () => {
   };
 
   return (
-    <div>
+    <div className="post-feed">
       <h2>My Posts - {username}</h2>
       {posts.length === 0 ? (
         <p>No posts available.</p>
       ) : (
         posts.map((post) => (
-          <div key={post._id}>
-            <h3>{post.title}</h3>
-            <p>
-              By {post.author} | {new Date(post.createdAt).toLocaleDateString()}
-            </p>
-            <p>{post.content.substring(0, 150)}...</p>
-            <Link to={`/posts/${post._id}`}>Read More</Link>
-            <button onClick={() => deletePost(post._id)}>Delete</button>
-            <Link to={`/updatePost/${post._id}`}>Update</Link>
+          <div className="postContainer" key={post._id}>
+            <img src={"http://localhost:3000/" + post.imageUrl} alt={`image about ${post.title}`} />
+            <div className="postCard">
+              <h3>{post.title}</h3>
+              <p>By {post.author} | {new Date(post.createdAt).toLocaleDateString()}</p>
+              <p>{post.content.substring(0, 150)}...</p>
+              <div className="post-actions">
+                <Link to={`/posts/${post._id}`} className="read-more">Read More</Link>
+                <button onClick={() => deletePost(post._id)} className="delete-btn">Delete</button>
+                <Link to={`/updatePost/${post._id}`} className="update-btn">Update</Link>
+              </div>
+            </div>
           </div>
         ))
       )}
