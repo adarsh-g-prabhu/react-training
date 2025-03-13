@@ -1,7 +1,8 @@
-
 const User=require('../models/model')
 const jwt=require('jsonwebtoken')
 const bcrypt=require('bcryptjs')
+const {generateAccessToken, generateRefreshToken}=require('../utils/jwt')
+
 const viewUsers =async(req,res)=>
 {
   console.log('hey')
@@ -36,18 +37,38 @@ const loginAuthentication = async (userEmail, password) => {
       if (!passwordMatch) {
         return { success: false, message: "Invalid password" };
       }
-  
-      const token = await generateToken(userData.email, userData._id, userData.name,userData.userRole);
 
-      return { success: true, token, user: userData };
+      const accessToken = generateAccessToken(userData);
+      const refreshToken = generateRefreshToken(userData);
+  
+      // const token = await generateToken(userData.email, userData._id, userData.name,userData.userRole);
+
+      return { success: true, token: accessToken,refresh: refreshToken, user: userData };
     } catch (error) {
       console.error(error)
       return { success: false, message: "Authentication error", error };
     }
   };
 
+  const refreshAccessToken = async (refreshToken) => {
+    try {
+      const payload = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+      const userData = {
+        _id: payload.userId,
+        email: payload.email,
+        username: payload.username,
+        userRole: payload.userRole
+      };
+      const newAccessToken = generateAccessToken(userData);
+      return { success: true, token: newAccessToken };
+    } catch (error) {
+      return { success: false, message: "Invalid token" };
+    }
+  };
+
 module.exports={
     viewUsers,
     generateToken,
-    loginAuthentication
+    loginAuthentication,
+    refreshAccessToken
 }

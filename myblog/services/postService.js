@@ -1,13 +1,27 @@
 const Post=require('../models/postModel')
 const mongoose= require('mongoose')
-const getAllPosts=async(req,res)=>{
+const getAllPosts = async () => {
+    try {
+      const posts = await Post.aggregate([
+        {
+          $lookup: {
+            from: "users",      
+            localField: "author", 
+            foreignField: "_id",  
+            as: "authorDetails"   
+          }
+        },
+        {
+          $unwind: "$authorDetails" 
+        }
+      ]);
+  
+      return posts.length > 0 ? posts : null;
+    } catch (error) {
+      throw new Error(error.message); 
+    }
+  };
 
-   const posts = await Post.find();
-   if (!posts)
-    return res.json({message:'No posts Found'})
-   else
-    return posts;
-}
 
 const createPosts= async(postData)=>{
     try{

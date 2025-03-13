@@ -1,5 +1,6 @@
 import { useState , useEffect } from "react";
 import api from "../api";
+// eslint-disable-next-line react/prop-types
 export default function CommentBox({ postId }) {
 const [comment,setComment]=useState('');
 const [comments,setComments]=useState([])
@@ -33,6 +34,7 @@ useEffect(() => {
       console.log('error')
 }
 
+
   return (
     <div className="comment"><div className="comment-box">
       <form onSubmit={handleSubmit}>
@@ -46,7 +48,7 @@ useEffect(() => {
       (<p>No comments yet.</p>):
       comments.map((comment) => (
         <div key={comment._id}>
-          <h6>{comment.userId}|| {comment.createdAt}</h6>
+          <h5 className="comment-header"><span>{comment.userDetails.name}</span><span>{new Date(comment.createdAt).toLocaleDateString()}</span></h5>
           <p >
             {comment.comment}</p>
             </div>
@@ -55,4 +57,5 @@ useEffect(() => {
       
       </div></div>
   );
+  
 }

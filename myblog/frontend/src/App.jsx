@@ -12,6 +12,10 @@ import PostView from './components/postView'
 import MyPosts from './components/myPosts';
 import UpdatePosts from './components/updatePosts';
 import SearchResult from './components/searchresults';
+import ProtectedRoute from './components/protectedroute';
+import PublicRoute from './components/publicroute';
+import { AuthProvider } from './context/authContext';
+import NotFound from './components/NotFound';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 
@@ -21,23 +25,63 @@ function App() {
   return (
     <>
     <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path='/admin' element={<Admindashboard/>}/>
-        <Route path='admin/viewUsers' element={<ViewUsers/>}/>
-        <Route path='/add-posts' element={<CreatePost/>}/>
-        <Route path='/posts/:id' element={<PostView/>}/>
-        <Route path='/myposts/' element={<MyPosts/>}/>
-        <Route path='/updatePost/:id' element={<UpdatePosts/>}/>
-        <Route path='/search/' element={<SearchResult/>}/>
-        {/* <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} /> */}
-      </Routes>
-    </Router>
+     <AuthProvider>
+      
+        <Navbar />
+        <Routes>
+          
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={
+            <PublicRoute>
+              <Login />
+              </PublicRoute>
+            } />
+          <Route path="/register" element={
+            <PublicRoute>
+              <Register />
+              </PublicRoute>
+            } />
+          <Route path="/posts/:id" element={
+            <ProtectedRoute>
+              <PostView />
+              </ProtectedRoute>} />
+          <Route path="/search" element={
+            <ProtectedRoute>
+              <SearchResult />
+              </ProtectedRoute>} />
 
+      
+          <Route path="/myposts" element={
+            <ProtectedRoute>
+              <MyPosts />
+            </ProtectedRoute>
+          } />
+          <Route path="/add-posts" element={
+            <ProtectedRoute>
+              <CreatePost />
+            </ProtectedRoute>
+          } />
+          <Route path="/updatePost/:id" element={
+            <ProtectedRoute>
+              <UpdatePosts />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin" element={
+            <ProtectedRoute>
+              <Admindashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/viewUsers" element={
+            <ProtectedRoute>
+              <ViewUsers />
+            </ProtectedRoute>
+          } />
+
+<Route path="*" element={<NotFound />} />
+        </Routes>
+     
+    </AuthProvider>
+    </Router>
     </>
   )
 }

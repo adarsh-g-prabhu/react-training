@@ -1,38 +1,21 @@
 "use client";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import TodoForm from "./components/TodoForm";
-import TodoList from "./components/TodoList";
-
-interface Todo {
-  _id: string;
-  task: string;
-  completed: boolean;
-}
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [todos, setTodos] = useState<Todo[]>([]);
-
-  useEffect(() => {
-    axios.get("/api/todos").then((res) => setTodos(res.data));
-  }, []);
-
-
-  const addTodo = async (task: string) => {
-    const { data } = await axios.post("/api/todos", { task });
-    setTodos([...todos, data]); 
-  };
-
-  const removeTodo = async (id: string) => {
-    await axios.delete("/api/todos", { data: { id } });
-    setTodos(todos.filter((todo) => todo._id !== id));
-  };
+  const router = useRouter();
 
   return (
-    <div className="p-6 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-4">To-Do List</h1>
-      <TodoForm onAddTodo={addTodo} />
-      <TodoList todos={todos} onRemoveTodo={removeTodo} />
+    <div className="p-6 max-w-md mx-auto text-center">
+      <h1 className="text-2xl font-bold mb-4">Welcome to To-Do App</h1>
+      <p className="mb-4">Please log in or register to start using the app.</p>
+      <div className="flex justify-center gap-4">
+        <button onClick={() => router.push("/register")} className="bg-blue-500 text-white px-4 py-2 rounded">
+          Register
+        </button>
+        <button onClick={() => router.push("/login")} className="bg-green-500 text-white px-4 py-2 rounded">
+          Login
+        </button>
+      </div>
     </div>
   );
 }

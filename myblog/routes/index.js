@@ -19,9 +19,10 @@ router.post('/login', authController.postLogin);
 // router.get('/register',authController.getRegister);
 router.post('/register',validateUser,authController.postRegister);
 
+router.post('/refresh_token', authController.refreshToken);
 // router.get('/adminDashboard',authController.adminDashboard);
 
-// router.use(auth.verifyToken);
+router.use(auth.verifyToken);
 
 router.get('/viewUsers',authController.viewUsers);
 

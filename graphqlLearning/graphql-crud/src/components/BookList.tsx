@@ -11,7 +11,7 @@ const BookList = () => {
   const [bookToUpdate, setBookToUpdate] = useState<Book | null>(null)
   const [bookToDelete, setBookToDelete] = useState<Book | null>(null)
   
-  // Use the useQuery hook to fetch data
+
   const { loading, error, data, refetch } = useQuery<BooksData>(GET_BOOKS)
   
   if (loading) return <p>Loading books...</p>
