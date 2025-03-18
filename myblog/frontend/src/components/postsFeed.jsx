@@ -1,43 +1,47 @@
 import { useEffect, useState } from "react";
-import api from "../api";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchPosts } from "../redux/blogSlice";
 import { Link } from "react-router-dom";
 
 const BlogFeed = () => {
-  const [posts, setPosts] = useState([]);
+  const dispatch = useDispatch();
+  
+  const { posts, status, error } = useSelector((state) => state.blog);
+
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 5;
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await api.get("/posts");
-        setPosts(response.data); 
-      } catch (err) {
-        console.error("Error fetching posts:", err);
-      }
-    };
-    fetchPosts();
-  }, []);
-
+  
+    if (status === 'idle' && posts.length === 0) {
+      dispatch(fetchPosts());
+    }
+  }, [status, posts, dispatch]);
 
   const totalPages = Math.ceil(posts.length / postsPerPage);
-
-  
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
   const goToNextPage = () => {
     if (currentPage < totalPages) {
-      setCurrentPage((prevPage) => prevPage + 1);
+      setCurrentPage(prevPage => prevPage + 1);
     }
   };
 
   const goToPreviousPage = () => {
     if (currentPage > 1) {
-      setCurrentPage((prevPage) => prevPage - 1);
+      setCurrentPage(prevPage => prevPage - 1);
     }
   };
+
+  if (status === 'loading') {
+    return <div>Loading posts...</div>;
+  }
+
+  if (status === 'failed') {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div className="post-feed">

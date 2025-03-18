@@ -7,7 +7,7 @@ const resolvers = {
       return await Book.find({});
     },
     book: async (_, { id }) => {
-      // Get a single book by ID
+    
       return await Book.findById(id);
     }
   },

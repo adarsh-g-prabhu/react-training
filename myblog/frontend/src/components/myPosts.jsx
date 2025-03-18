@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import api from "../api";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { deletePost } from '../redux/blogSlice';
 
 const MyPosts = () => {
   const [posts, setPosts] = useState([]);
   const [author, setAuthor] = useState(null);
   const [username, setUsername] = useState(localStorage.getItem("username"));
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const storedAuthor = localStorage.getItem("id");
@@ -14,12 +18,12 @@ const MyPosts = () => {
     setUsername(localStorage.getItem("username"));
   }, []);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      if (!author) return;
 
-      console.log("Fetching posts for author:", author);
+  useEffect(() => {
+    const fetchMyPosts = async () => {
+      if (!author) return;
       try {
+        console.log("Fetching posts for author:", author);
         const response = await api.get(`/myposts/${author}`);
         console.log("Fetched posts:", response.data);
         setPosts(response.data);
@@ -28,17 +32,17 @@ const MyPosts = () => {
       }
     };
 
-    fetchPosts();
+    fetchMyPosts();
   }, [author]);
 
-  const deletePost = async (postId) => {
+  const handleDelete = async (postId) => {
     try {
-      await api.delete(`/posts/${postId}`);
-      console.log("Post deleted");
+      await dispatch(deletePost(postId)).unwrap();
+      console.log('Post deleted');
+      setPosts(prevPosts => prevPosts.filter(post => post._id !== postId));
       navigate("/myposts/");
-      setPosts(posts.filter((post) => post._id !== postId));
     } catch (err) {
-      console.error("Error deleting post:", err);
+      console.error('Error deleting post:', err);
     }
   };
 
@@ -50,15 +54,26 @@ const MyPosts = () => {
       ) : (
         posts.map((post) => (
           <div className="postContainer" key={post._id}>
-            <img src={"http://localhost:3000/" + post.imageUrl} alt={`image about ${post.title}`} />
+            <img 
+              src={`http://localhost:3000/${post.imageUrl}`} 
+              alt={`image about ${post.title}`} 
+            />
             <div className="postCard">
               <h3>{post.title}</h3>
-              <p>By {post.author} | {new Date(post.createdAt).toLocaleDateString()}</p>
+              <p>
+                By {post.author} | {new Date(post.createdAt).toLocaleDateString()}
+              </p>
               <p>{post.content.substring(0, 150)}...</p>
               <div className="post-actions">
-                <Link to={`/posts/${post._id}`} className="read-more">Read More</Link>
-                <button onClick={() => deletePost(post._id)} className="delete-btn">Delete</button>
-                <Link to={`/updatePost/${post._id}`} className="update-btn">Update</Link>
+                <Link to={`/posts/${post._id}`} className="read-more">
+                  Read More
+                </Link>
+                <button onClick={() => handleDelete(post._id)} className="delete-btn">
+                  Delete
+                </button>
+                <Link to={`/updatePost/${post._id}`} className="update-btn">
+                  Update
+                </Link>
               </div>
             </div>
           </div>
