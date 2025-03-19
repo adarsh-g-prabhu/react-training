@@ -28,6 +28,8 @@ api.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
+        let a=[1,2];
+        a.slice
         const response = await axios.post("http://localhost:3000/refresh_token", {}, { withCredentials: true });
         const newAccessToken = response.data.token;
         localStorage.setItem("token", newAccessToken);
