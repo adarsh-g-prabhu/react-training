@@ -2,10 +2,11 @@ const Post = require('../../models/postModel');
 
 module.exports = {
   Query: {
-
     posts: async () => {
       try {
+        
         return await Post.find();
+        
       } catch (err) {
         throw new Error('Error fetching posts: ' + err.message);
       }

@@ -1,51 +1,45 @@
-import { useState, useEffect } from "react";
-import api from "../api";
+import { useState } from "react";
+import { useQuery, useMutation } from "@apollo/client";
+import { GET_COMMENTS, ADD_COMMENT } from "../graphql/queries"; 
+import { useAuth } from "../context/authContext";
+
 // eslint-disable-next-line react/prop-types
 export default function CommentBox({ postId }) {
-  const [comment, setComment] = useState('');
-  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
+ const { user } = useAuth();
+//  console.log('user',user)
+  const { loading, error, data, refetch } = useQuery(GET_COMMENTS, {
+    variables: { postId },
+  });
+  console.log('post id', postId)
+  console.log('comments',data);
+  console.log()
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        console.log('commentid', postId);
-        const response = await api.get(`/comment/${postId}`);
-        console.log('Fetched comments:', response.data);
-        
-        // Adjust based on response structure:
-        const fetchedData = response.data;
-        if (Array.isArray(fetchedData)) {
-          setComments(fetchedData);
-        } else if (fetchedData && Array.isArray(fetchedData.comments)) {
-          setComments(fetchedData.comments);
-        } else if (fetchedData) {
-          setComments([fetchedData]);
-        } else {
-          setComments([]);
-        }
-      } catch (error) {
-        console.error("Error fetching comments", error);
-      }
-    };
-    fetchComments();
-  }, [postId]);
+  const [addComment] = useMutation(ADD_COMMENT, {
+    onCompleted: () => {
+      refetch();
+      setComment("");
+    },
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const username = localStorage.getItem('id');
+   
+    if (!comment.trim()) return;
     try {
-      const commenting = await api.post(`/comment/${postId}`, {
-        comment: comment,
-        userId: username
+      // console.log('user data',postId, "u",user._id,comment);
+      await addComment({ 
+        variables: { 
+          input: { 
+            postId, 
+            userId: user._id, 
+            comment 
+          } 
+        } 
       });
-      if (commenting) {
-        console.log('commented');
-        window.location.reload();
-      } else {
-        console.log('error');
-      }
+      
     } catch (error) {
-      console.error('Error posting comment:', error);
+      console.error("Error posting comment:", error);
     }
   };
 
@@ -61,18 +55,22 @@ export default function CommentBox({ postId }) {
             onChange={(e) => setComment(e.target.value)}
             required
           />
-          <input type="submit" value='comment' />
+          <input type="submit" value="comment" />
         </form>
       </div>
       <div className="comment-section">
-        {comments.length === 0 ? (
+        {loading ? (
+          <p>Loading comments...</p>
+        ) : error ? (
+          <p>Error fetching comments</p>
+        ) : data.comments.length === 0 ? (
           <p>No comments yet.</p>
         ) : (
-          comments.map((comment) => (
+          data.comments.map((comment) => (
             <div key={comment._id}>
               <h5 className="comment-header">
-                <span>{comment.userDetails?.name}</span>
-                <span>{new Date(comment.createdAt).toLocaleDateString()}</span>
+                <span>{comment.userId?.name}</span>
+                <span>{new Date(comment.createdAt).toLocaleString()}</span>
               </h5>
               <p>{comment.comment}</p>
             </div>

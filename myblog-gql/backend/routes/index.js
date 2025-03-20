@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
-const auth=require('../middlewares/auth')
+const auth=require('../middlewares(mvc)/auth')
 const postController=require('../controllers/postController');
 const commentController=require('../controllers/commentController')
-const upload=require('../middlewares/multer')
-const validateUser=require('../middlewares/validateUser')
+const upload=require('../middlewares(mvc)/multer')
+const validateUser=require('../middlewares(mvc)/validateUser')
 
 router.get('/', function(req, res) {
   res.render('index');

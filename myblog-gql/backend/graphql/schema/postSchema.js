@@ -1,6 +1,6 @@
 const { gql } = require('apollo-server-express');
 
-module.exports = gql`
+const postSchema = gql`
   type Post {
     _id: ID!
     title: String!
@@ -29,3 +29,5 @@ module.exports = gql`
     deletePost(postId: ID!): ID!
   }
 `;
+
+module.exports = postSchema; 

@@ -1,13 +1,14 @@
-
 import { useState } from "react";
+import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
-import api from "../api";
+import { LOGIN_USER } from "../graphql/mutations";
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [loginUser, { loading, error }] = useMutation(LOGIN_USER);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,19 +17,16 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post("/login", formData);
-      const { token, user } = response.data;
+      console.log('dta',formData)
+      const { data } = await loginUser({ variables: { input: formData } });
+      const { token, user } = data.login;
       login(user, token);
+
       alert("Login Successful!");
-      if (user.role === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/");
-      }
-    } catch (error) {
+      navigate(user.role === "admin" ? "/admin" : "/");
+    } catch (err) {
       alert("Login Failed!");
-      console.error(error.response?.data || error.message);
-      navigate("/login");
+      console.error(err.message);
     }
   };
 
@@ -37,11 +35,28 @@ export default function Login() {
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email:</label>
-        <input type="email" id="email" name="email" required value={formData.email} onChange={handleChange} />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          value={formData.email}
+          onChange={handleChange}
+        />
         <label htmlFor="password">Password:</label>
-        <input type="password" id="password" name="password" required value={formData.password} onChange={handleChange} />
-        <button type="submit">Login</button>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          value={formData.password}
+          onChange={handleChange}
+        />
+        <button type="submit" disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
+        </button>
       </form>
+      {error && <p style={{ color: "red" }}>{error.message}</p>}
     </div>
   );
 }

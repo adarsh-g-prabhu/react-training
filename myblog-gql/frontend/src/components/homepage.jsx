@@ -5,7 +5,7 @@ import SearchPosts from "./searchPosts";
 
 export default function Homepage() {
   const { user } = useAuth();
-
+  console.log('user',user);
   return (
     <>
       {user && user.userRole === "user" ? (
@@ -14,7 +14,7 @@ export default function Homepage() {
             <Link to="/add-posts">Add Posts</Link>
             <Link to="/myposts/">My Posts</Link>
           </div>
-          <h1>Welcome {user.username}</h1>
+          <h1>Welcome {user.name}</h1>
           <SearchPosts />
           <PostFeed />
         </>

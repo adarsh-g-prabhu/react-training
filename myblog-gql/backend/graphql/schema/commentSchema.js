@@ -1,24 +1,33 @@
-const {gql}=require('apollo-server-express');
+const { gql } = require('apollo-server-express');
 
-module.exports=gql `
-type Comment{
-    _id:ID
-    postId:ID!
-    userID:ID!
-    comment:String!
-}
+const commentSchema = gql`
 
-input commentInput{
-     postId:ID!
-    userID:ID!
-    comment:String!
+type User {
+  _id: ID!
+  name: String!
 }
+  type Comment {
+    _id: ID!
+    postId: ID!
+    userId: User!
+    comment: String!
+    createdAt: String!
+  }
 
-type Query{
-    comment(postID: ID!):[Comment!]!
-}
 
- type Mutation {
-    createComment(input: commentInput!): Comment!
-}
-`
+  input CommentInput {
+    postId: ID!
+    userId: ID!
+    comment: String!
+  }
+
+  type Query {
+    comments(postId: ID!): [Comment!]!
+  }
+
+  type Mutation {
+    addComment(input: CommentInput!): Comment!
+  }
+`;
+
+module.exports = commentSchema;

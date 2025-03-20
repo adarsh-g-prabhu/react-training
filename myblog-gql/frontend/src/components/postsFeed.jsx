@@ -1,19 +1,8 @@
 import { useState } from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { Link } from 'react-router-dom';
+import { FETCH_POSTS_QUERY } from '../graphql/queries';
 
-const FETCH_POSTS_QUERY = gql`
-    query GetPosts {
-    posts {
-      _id
-      title
-      content
-      author
-      createdAt
-      imageUrl
-    }
-  }
-`;
 
 const BlogFeed = () => {
   const postsPerPage = 5;
