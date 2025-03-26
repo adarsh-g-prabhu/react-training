@@ -5,7 +5,14 @@ import User from "../../../models/user";
 
 export async function POST(req: NextRequest) {
   try {
-    await connectDb();
+    console.log('out connected')
+    const conn=await connectDb();
+    if (conn)
+    {
+      console.log('connected')
+    }
+    else
+    console.log('not con')
     const { name, email, password } = await req.json();
 
     const existingUser = await User.findOne({ email });

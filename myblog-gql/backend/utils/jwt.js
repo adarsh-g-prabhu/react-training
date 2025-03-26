@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
+
 const generateAccessToken = (user) => {
   return jwt.sign(
     { userId: user._id, email: user.email, username: user.name, userRole: user.userRole },
@@ -17,8 +18,13 @@ const generateRefreshToken = (user) => {
 };
 
 
+const verifyToken = (token) => {
+  return jwt.verify(token, process.env.JWT_SECRET_KEY);
+};
+
 
 module.exports = {
   generateAccessToken,
   generateRefreshToken,
+  verifyToken
 };

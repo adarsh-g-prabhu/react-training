@@ -1,9 +1,10 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/model"); 
+require('dotenv').config();
 const { AuthenticationError } = require("apollo-server-express");
 
-const SECRET_KEY = process.env.JWT_SECRET || "your_secret_key";
+const SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 module.exports = {
   Query: {
@@ -35,21 +36,22 @@ module.exports = {
         if (existingUser) throw new Error("Email is already in use");
 
 
-        const hashedPassword = await bcrypt.hash(password, 10);
+        // const hashedPassword = await bcrypt.hash(password,10);
 
         // Create new user
         const newUser = new User({
           name,
           email,
-          password: hashedPassword,
+          password,
           createdAt: new Date().toISOString(),
         });
 
        
         await newUser.save();
 
+        console.log("New user created:", newUser);
        
-        const token = jwt.sign({ userId: newUser._id }, SECRET_KEY, { expiresIn: "7d" });
+        const token = jwt.sign({ userId: newUser._id.toString() }, SECRET_KEY, { expiresIn: "1h" });
 
         return { token, user: { ...newUser.toObject(), password: null } };
       } catch (err) {
@@ -65,13 +67,18 @@ module.exports = {
         const user = await User.findOne({ email:email });
         console.log('user',user);
         if (!user) throw new AuthenticationError("Invalid credentials");
-        console.log('pass',password)
+        console.log('pass',password,'userpass',user.password)
         
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) throw new AuthenticationError("Invalid credentials");
+        if (!isMatch) 
+          {
+            console.log('in pass ')
+            throw new AuthenticationError("Invalid credentials");
+          }
 
         
-        const token = jwt.sign({ userId: user._id }, SECRET_KEY, { expiresIn: "7d" });
+        const token = jwt.sign({ userId: user._id.toString(), email: user.email }, SECRET_KEY, { expiresIn: "7d" });
+
 
         return { token,
             user: {

@@ -1,19 +1,30 @@
 import mongoose from "mongoose";
 
-const MONGO_URI = "mongodb://127.0.0.1:27017/todos";
+const MONGODB_URI = process.env.MONGODB_URI;
+const DATABASE_NAME = "todos";
 
-export const connectDb = async () => {
-  try {
-    if (mongoose.connection.readyState >= 1) {
-      console.log("Already connected to MongoDB.");
-      return;
+if (!MONGODB_URI) {
+    throw new Error("Please define the MONGODB_URI environment variable inside .env.local");
+}
+
+const cached = (global as any).mNEXT_PUBLIC_GOOGLE_GEN_AI_API_KEYongoose || { conn: null, promise: null };
+
+export async function connectDb() {
+    try
+  {if (cached.conn) {
+        return cached.conn;
     }
 
-    await mongoose.connect(MONGO_URI);
+    if (!cached.promise) {
+        cached.promise = mongoose.connect(MONGODB_URI, {
+            dbName: DATABASE_NAME, // 👈 Manually specify the database name
+            bufferCommands: false,
+        }).then(mongoose => mongoose);
+    }
 
-    console.log("Connected to MongoDB locally!");
-  } catch (error) {
-    console.error("MongoDB connection error:", error);
-    process.exit(1);
-  }
-};
+    cached.conn = await cached.promise;
+    return cached.conn;}
+    catch{
+      console.log('error connect')
+    }
+}

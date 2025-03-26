@@ -51,3 +51,30 @@ export const LOGIN=gql`
     }
     }
 `
+
+export const GET_MY_POSTS = gql`
+  query GetMyPosts($author: ID!) {
+    myPosts(author: $author) {
+      _id
+      title
+      content
+      author
+      createdAt
+      imageUrl
+    }
+  }
+`;
+
+export const GET_POST = gql`
+  query GetPost($id: ID!) {
+    post(id: $id) {
+      _id
+      title
+      content
+      author
+      createdAt
+      imageUrl
+      tags
+    }
+  }
+`;

@@ -12,6 +12,8 @@ const BlogFeed = () => {
     variables: { offset: (currentPage - 1) * postsPerPage, limit: postsPerPage },
   });
 
+  console.log('dat',data)
+
   const totalPages = data ? Math.ceil(data.posts.length / postsPerPage) : 1;
 
   const goToNextPage = () => {
@@ -44,7 +46,7 @@ const BlogFeed = () => {
             <div className="postCard">
               <h3>{post.title}</h3>
               <p>
-                By {post.author} | {new Date(post.createdAt).toLocaleDateString()}
+                By {post.author} | {new Date(post.createdAt).toLocaleString()}
               </p>
               <p>{post.content.substring(0, 150)}...</p>
               <Link to={`/posts/${post._id}`}>Read More</Link>

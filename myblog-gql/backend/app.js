@@ -8,6 +8,8 @@ const routes = require('./routes');
 const { createApolloServer, expressMiddleware } = require('./graphql/server');
 const context = require('./graphql/context');
 const connectDB = require('./config/db');
+const { graphqlUploadExpress }=require('graphql-upload')
+
 
 const createApp = async () => {
   const app = express();
@@ -20,11 +22,12 @@ const createApp = async () => {
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
   app.use(express.static(path.join(__dirname, 'public')));
+  app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 1 }));
 
   const server = await createApolloServer();
   app.use('/graphql', expressMiddleware(server, { context }));
 
-  app.use('/', routes);
+  // app.use('/', routes);
 
   app.use((req, res, next) => {
     if (!req.originalUrl.startsWith('/graphql')) {

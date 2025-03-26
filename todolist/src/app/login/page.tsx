@@ -21,6 +21,7 @@ export default function Login() {
       } else {
         alert(response.data.message || "Invalid credentials. Please try again.");
       }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error("Login error:", error);
       alert(error.response?.data?.message || "Something went wrong. Please try again.");

@@ -1,54 +1,47 @@
 import { useEffect, useState } from "react";
-import api from "../api";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
-import { deletePost } from '../redux/blogSlice';
+import { useNavigate, Link } from "react-router-dom";
+import { useQuery, useMutation } from "@apollo/client";
+import { GET_MY_POSTS } from "../graphql/queries";
+import { DELETE_POST } from "../graphql/mutations";
 
 const MyPosts = () => {
-  const [posts, setPosts] = useState([]);
-  const [author, setAuthor] = useState({});
-  // const [username, setUsername] = useState(localStorage.getItem("username"));
-  const dispatch = useDispatch();
+  const [author, setAuthor] = useState(null);
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const storedAuthor = localStorage.getItem("user");
-    setAuthor(JSON.parse(storedAuthor));
-    // setUsername(localStorage.getItem("username"));
+    if (storedAuthor) {
+      setAuthor(JSON.parse(storedAuthor));
+
+    }
   }, []);
 
+  console.log("auth", author);
+  const { loading, error, data, refetch } = useQuery(GET_MY_POSTS, {
+    variables: { author: author ? author._id : "" },
+    skip: !author, // Skip query until author exists
+  });
 
-  useEffect(() => {
-    const fetchMyPosts = async () => {
-      if (!author) return;
-      try {
-        console.log("Fetching posts for author:", author);
-        const response = await api.get(`/myposts/${author._id}`);
-        console.log("Fetched posts:", response.data);
-        setPosts(response.data);
-      } catch (err) {
-        console.error("Error fetching posts:", err);
-      }
-    };
-
-    fetchMyPosts();
-  }, [author]);
+  const [deletePostMutation] = useMutation(DELETE_POST);
 
   const handleDelete = async (postId) => {
     try {
-      await dispatch(deletePost(postId)).unwrap();
-      console.log('Post deleted');
-      setPosts(prevPosts => prevPosts.filter(post => post._id !== postId));
-      navigate("/myposts/");
+      await deletePostMutation({ variables: { postId } });
+      refetch();
+      navigate("/myposts");
     } catch (err) {
-      console.error('Error deleting post:', err);
+      console.error("Error deleting post:", err);
     }
   };
 
+  if (loading) return <p>Loading posts...</p>;
+  if (error) return <p>Error fetching posts: {error.message}</p>;
+
+  const posts = data?.myPosts || [];
+
   return (
     <div className="post-feed">
-      <h2>My Posts - {author.name}</h2>
+      <h2>My Posts - {author?.name}</h2>
       {posts.length === 0 ? (
         <p>No posts available.</p>
       ) : (
@@ -56,12 +49,13 @@ const MyPosts = () => {
           <div className="postContainer" key={post._id}>
             <img 
               src={`http://localhost:3001/${post.imageUrl}`} 
-              alt={`image about ${post.title}`} 
+              alt={`Image about ${post.title}`} 
             />
             <div className="postCard">
               <h3>{post.title}</h3>
               <p>
-                By {post.author} | {new Date(post.createdAt).toLocaleDateString()}
+                By {post.author.username} |{" "}
+                {new Date(post.createdAt).toLocaleDateString()}
               </p>
               <p>{post.content.substring(0, 150)}...</p>
               <div className="post-actions">

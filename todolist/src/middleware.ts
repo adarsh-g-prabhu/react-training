@@ -20,7 +20,6 @@ export async function middleware(req: NextRequest) {
   }
 
   try {
-  
     const secret = new TextEncoder().encode(process.env.JWT_SECRET);
     const { payload } = await jwtVerify(token, secret);
     // console.log("User ID:", payload.id);
@@ -40,3 +39,7 @@ export async function middleware(req: NextRequest) {
 export const config = {
   matcher: ["/api/:path*"], 
 };
+
+
+
+
